@@ -6,22 +6,10 @@ canvas.style.height = `${CANVAS_SIZE}px`;
 
 generateGrid(16);
 
-canvas.addEventListener("mouseover", (e) => {
-    let square = e.target;
-    if (square.classList.contains("square")) {
-        square.classList.add("colored");
-    }
-});
+canvas.addEventListener("mouseover", colorSquare);
 
 const reset = document.querySelector("#reset");
-reset.addEventListener("click", () => {
-    resetGrid();
-    let size = window.prompt("Input a size between 1 and 100");
-    if (size > 100 || size < 1) {
-        size = 16;
-    }
-    generateGrid(size);
-});
+reset.addEventListener("click", createNewGrid);
 
 //==========functions===========================================================
 
@@ -43,4 +31,23 @@ function resetGrid() {
     squareList.forEach((square) => {
         canvas.removeChild(square);
     })
+}
+
+function createNewGrid() {
+    resetGrid();
+    let size = window.prompt("Input a size between 1 and 100");
+    if (size > 100 || size < 1) {
+        size = 16;
+    }
+    generateGrid(size);
+}
+
+function colorSquare(e) {
+    let square = e.target;
+    if (square.classList.contains("square")) {
+        square.style.backgroundColor = "black";
+        if (square.style.opacity < 1) {
+            square.style.opacity = +square.style.opacity + 0.1;
+        }
+    }
 }
